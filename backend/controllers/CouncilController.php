@@ -43,18 +43,6 @@ class CouncilController {
 
   public function destroy($id) {
     try {
-      if(isset($id) && !is_numeric($id)) {
-        throw new Exception('Invalid ID provided');
-      }
-      if($id <= 0) {
-        throw new Exception('ID must be greater than zero');
-      }
-      if(!$this->council->getAll()->fetchColumn()) {
-        throw new Exception('No councils found to delete');
-      }
-      if(!$this->council->getAll()->fetchColumn($id)) {
-        throw new Exception('Council not found');
-      }
       $this->council->delete($id);
       echo json_encode(['success' => true, 'message' => 'Council deleted successfully', 'data' => $this->council->getAll()->fetchAll(PDO::FETCH_ASSOC)]);
     } catch (PDOException $e) {

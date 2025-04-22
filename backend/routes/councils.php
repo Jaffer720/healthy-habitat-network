@@ -8,7 +8,8 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 parse_str($_SERVER['QUERY_STRING'] ?? '', $params);
 $data = json_decode(file_get_contents("php://input"), true);
 
-switch ($requestMethod && strpos($path, 'api/councils') !== false) {
+switch ($requestMethod) {
+  
   case 'GET':
     $councilController->index();
     break;
