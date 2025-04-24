@@ -1,19 +1,18 @@
 import { useState } from "react";
 import ConfirmModal from "../../../components/ui/ConfirmModal";
-import Modal from "../../../components/ui/Modal";
+// import Modal from "../../../components/ui/Modal";
 import Table from "../../../components/ui/Table";
 import useVotes from "../../../hooks/useVotes";
-import useResident from "../../../hooks/useResidents";
-import useLocation from "../../../hooks/useLocations";
-import useUser from "../../../hooks/useUser";
+// import useResident from "../../../hooks/useResidents";
+import useAuth from "../../../hooks/useAuth";
+import useProducts from "../../../hooks/useProducts";
 // import VoteForm from "../../../components/forms/Vote/VoteForm";
 
 export default function VoteList() {
-    const { user } = useUser() // Assuming you have a user context or hook to get the current user
-    const { votes, createVote, deleteVote } = useVotes();
-    const user_votes = votes.filter((vote) => vote.user_id === user.id); // Replace with actual user ID
-    const { residents } = useResident();
-    const { products } = useLocation();
+    const { votes, deleteVote } = useVotes();
+    const { user } = useAuth();
+    // const { residents } = useResident();
+    const { products } = useProducts();
 
     // const [modalOpen, setModalOpen] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
@@ -25,9 +24,9 @@ export default function VoteList() {
         { Header: "Vote Value", accessor: "vote_value" },
     ];
 
-    const handleAdd = () => {
-        setModalOpen(true);
-    };
+    // const handleAdd = () => {
+    //     setModalOpen(true);
+    // };
 
     const handleDelete = (id) => {
         setDeleteId(id);
@@ -39,26 +38,28 @@ export default function VoteList() {
         if (res.success) {
             alert("Vote deleted successfully");
         } else {
-            alert("Error deleting vote");
+            alert(res.error || "Error deleting vote");
         }
         setDeleteId(null);
         setConfirmOpen(false);
     };
 
-    const handleSubmit = async (values) => {
-        const res = await createVote(values);
-        if (res.success) {
-            alert("Vote created successfully");
-        } else {
-            alert("Error creating vote");
-        }
-        setModalOpen(false);
-        // refetch data if needed
-    };
+    // const handleSubmit = async (values) => {
+    //     const res = await createVote(values);
+    //     if (res.success) {
+    //         alert("Vote created successfully");
+    //     } else {
+    //         alert("Error creating vote");
+    //     }
+    //     setModalOpen(false);
+    //     // refetch data if needed
+    // };
+    // filterd votes by resident id
+    const filteredVotes = votes.filter((vote) => vote.resident_id === user.id);
 
-    const votesWithNames = user_votes.map((vote) => ({
+    const votesWithNames = filteredVotes.map((vote) => ({
         ...vote,
-        residentName: residents.find((r) => r.id === vote.resident_id)?.name || "Unknown",
+        residentName: user.name || "Unknown",
         productName: products.find((p) => p.id === vote.product_id)?.name || "Unknown",
     }));
 

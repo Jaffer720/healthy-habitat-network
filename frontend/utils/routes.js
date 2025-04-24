@@ -52,3 +52,70 @@ export const adminRoutes = [
         path: "/admin/reports",
     },
 ];
+
+export const businessRoutes = [
+    {
+        title: "Dashboard",
+        path: "/business",
+    },
+    {
+        title: "Product",
+        path: "/business/product",
+        subRoutes: [
+            { title: "All Products", path: "/business/product" },
+            { title: "Add Product", path: "/business/product/add" },
+        ],
+    },
+    // {
+    //     title: "Orders",
+    //     path: "/business/orders",
+    //     subRoutes: [
+    //         { title: "All Orders", path: "/business/orders" },
+    //         { title: "Add Order", path: "/business/orders/add" },
+    //     ],
+    // },
+    // {
+    //     title: "Reports",
+    //     path: "/business/reports",
+    // },
+    // {
+    //     title: "Settings",
+    //     path: "/business/settings",
+    // },
+    {
+        title: "Profile",
+        path: "/business/profile",
+    },
+]
+
+
+export const residentRoutes = [
+    {
+        title: "Dashboard",
+        path: "/resident",
+    },
+    {
+        title: "Product",
+        path: "/resident/product",
+    },
+    {
+        title: "Vote",
+        path: "/resident/vote",
+    },
+    {
+        title: "Profile",
+        path: "/resident/profile",
+    },
+    // {
+    //     title: "Settings",
+    //     path: "/resident/settings",
+    // },
+    // {
+    //     title: "Reports",
+    //     pahth: "/resident/reports",
+    // },
+    // {
+    //     title: "Profile",
+    //     path: "/resident/profile",
+    // },
+]

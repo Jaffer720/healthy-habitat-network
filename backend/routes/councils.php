@@ -8,18 +8,12 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 parse_str($_SERVER['QUERY_STRING'] ?? '', $params);
 $data = json_decode(file_get_contents("php://input"), true);
 
-switch ($requestMethod) {
-  
-  case 'GET':
+if ($requestMethod === 'GET' && strpos($path, 'api/councils') !== false) {
     $councilController->index();
-    break;
-  case 'POST':
+} elseif ($requestMethod === 'POST' && strpos($path, 'api/councils') !== false) {
     $councilController->store($data);
-    break;
-  case 'PUT':
+} elseif ($requestMethod === 'PUT' && strpos($path, 'api/councils') !== false) {
     $councilController->update($params['id'], $data);
-    break;
-  case 'DELETE':
+} elseif ($requestMethod === 'DELETE' && strpos($path, 'api/councils') !== false) {
     $councilController->destroy($params['id']);
-    break;
 }

@@ -3,6 +3,8 @@ import "../styles/globals.css";
 import Navbar from "../components/layouts/Navbar";
 import { useRouter } from "next/router";
 import AdminLayout from "../components/layouts/AdminLayout";
+import ResidentLayout from "../components/layouts/ResidentLayout";
+import BusinessLayout from "../components/layouts/BusinessLayout";
 
 import AuthProvider from "../context/authContext";
 import { CouncilProvider } from "../context/CouncilContext";

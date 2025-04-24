@@ -8,7 +8,7 @@ export const BusinessProvider = ({ children }) => {
     const fetchBusinesses = async () => {
         const res = await fetch("http://localhost:8000/index.php/api/businesses");
         const data = await res.json();
-        setBusinesses(data);
+        setBusinesses(data.data);
     };
 
     const createBusiness = async (payload) => {

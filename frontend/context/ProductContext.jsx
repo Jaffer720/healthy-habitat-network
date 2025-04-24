@@ -8,7 +8,7 @@ export const ProductProvider = ({ children }) => {
     const fetchProducts = async () => {
         const res = await fetch("http://localhost:8000/index.php/api/products");
         const data = await res.json();
-        setProducts(data);
+        setProducts(data.data);
     };
 
     const createProduct = async (product) => {

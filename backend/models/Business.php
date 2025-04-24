@@ -49,5 +49,36 @@ class Business {
         $stmt->execute([':username' => $username]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function login($username) {
+        $stmt = $this->conn->prepare("SELECT * FROM residents WHERE username = :username");
+        $stmt->execute([':username' => $username]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function register($data) {
+        
+        $query = "INSERT INTO {$this->table} 
+                  (name, contact_info, certifications, location_id, username, password) 
+                  VALUES (:name, :contact_info, :certifications, :location_id, :username, :password)";
+        
+        $stmt = $this->conn->prepare($query);
+        
+        return $stmt->execute([
+            ':name' => $data['name'],
+            ':contact_info' => $data['contact_info'],
+            ':certifications' => $data['certifications'],
+            ':location_id' => $data['location_id'],
+            ':username' => $data['username'],
+            ':password' => $data['password'],
+        ]);
+    }
+
+    public function checkUsername($username) {
+        // Check if username already exists
+        $check = $this->conn->prepare("SELECT * FROM {$this->table} WHERE username = :username");
+        return $check->execute([':username' => $username]);
+        
+    }
 }
 ?>

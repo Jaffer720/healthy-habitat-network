@@ -15,4 +15,5 @@ require_once __DIR__ . '/routes/businesses.php';
 require_once __DIR__ . '/routes/products.php';
 require_once __DIR__ . '/routes/councils.php';
 require_once __DIR__ . '/routes/locations.php';
+require_once __DIR__ . '/routes/votes.php';
 ?>

@@ -11,20 +11,40 @@ class ProductController {
   }
   
   public function index() {
-    echo json_encode($this->product->getAll()->fetchAll(PDO::FETCH_ASSOC));
+    try{
+      $products = $this->product->getAll()->fetchAll(PDO::FETCH_ASSOC);
+      echo json_encode(['success' => true, 'data' => $products]);
+    } catch (Exception $e) {
+      echo json_encode(["success" => false, 'error' => $e->getMessage()]);
+    }
   }
 
   public function store($data) {
-    foreach ($data as $key => $value) $this->product->$key = $value;
-    echo json_encode(['success' => $this->product->create()]);
+    try {
+      foreach ($data as $key => $value) $this->product->$key = $value;
+      $this->product->create();
+      echo json_encode(['success' => true, "message" => "Product added successfully"]);
+    } catch (Exception $e) {
+      echo json_encode(["success" => false, 'error' => $e->getMessage()]);
+    }
   }
 
   public function update($id, $data) {
-    foreach ($data as $key => $value) $this->product->$key = $value;
-    echo json_encode(['success' => $this->product->update($id)]);
+    try {
+      foreach ($data as $key => $value) $this->product->$key = $value;
+      $this->product->update($id);
+      echo json_encode(['success' => true, "message" => "Product updated successfully"]);
+    } catch (Exception $e) {
+      echo json_encode(["success" => false, 'error' => $e->getMessage()]);
+    }
   }
 
   public function destroy($id) {
-    echo json_encode(['success' => $this->product->delete($id)]);
+    try{
+    $this->product->delete($id);
+    echo json_encode(['success' => true, "message" => "Product deleted successfully"]);
+    } catch (Exception $e) {
+      echo json_encode(["success" => false, 'error' => $e->getMessage()]);
+    }
   }
 }

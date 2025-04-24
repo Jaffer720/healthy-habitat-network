@@ -12,26 +12,29 @@ class VoteController {
 
   public function index() {
     try{
-      echo json_encode($this->vote->getAll()->fetchAll(PDO::FETCH_ASSOC));
+      $votes = $this->vote->getAll()->fetchAll(PDO::FETCH_ASSOC);
+      echo json_encode(["success" => true, "data" => $votes]);
     } catch (Exception $e) {
-      echo json_encode(['error' => $e->getMessage()]);
+      echo json_encode(["success" => false, 'error' => $e->getMessage()]);
     }
   }
 
   public function store($data) {
     try {
       foreach ($data as $key => $value) $this->vote->$key = $value;
-      echo json_encode(['success' => $this->vote->create()]);
+      $this->vote->create();
+      echo json_encode(['success' => true, "message" => "Vote added successfully"]);
     } catch (Exception $e) {
-      echo json_encode(['error' => $e->getMessage()]);
+      echo json_encode(["success" => false, 'error' => $e->getMessage()]);
     }
   }
 
   public function destroy($id) {
     try {
-      echo json_encode(['success' => $this->vote->delete($id)]);
+      $this->vote->delete($id);
+      echo json_encode(["success" => true, "message" => "Vote deleted successfully"]);
     } catch (Exception $e) {
-      echo json_encode(['error' => $e->getMessage()]);
+      echo json_encode(["success" => false, 'error' => $e->getMessage()]);
     }
   }
 }

@@ -28,10 +28,12 @@ export default function ProductList() {
         business_id: "",
         name: "",
         description: "",
-        size: "",
+        quantity_size: "",
+        category: "",
         price: "",
         type: "product",
-        category: "affordable"
+        price_range: "affordable"
+
     });
 
     const [deleteId, setDeleteId] = useState(null);

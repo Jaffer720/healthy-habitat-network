@@ -51,5 +51,38 @@ class Resident {
         $stmt->execute([':username' => $username]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function login($username) {
+        $stmt = $this->conn->prepare("SELECT * FROM residents WHERE username = :username");
+        $stmt->execute([':username' => $username]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function register($data) {
+        $query = "INSERT INTO {$this->table} 
+                  (name, age_group, gender, location_id, areas_of_interest, username, password) 
+                  VALUES (:name, :age_group, :gender, :location_id, :areas_of_interest, :username, :password)";
+        
+        $stmt = $this->conn->prepare($query);
+        
+        return $stmt->execute([
+            ':name' => $data['name'],
+            ':age_group' => $data['age_group'],
+            ':gender' => $data['gender'],
+            ':location_id' => $data['location_id'],
+            ':areas_of_interest' => is_array($data['areas_of_interest']) 
+                ? implode(',', $data['areas_of_interest']) 
+                : $data['areas_of_interest'],
+            ':username' => $data['username'],
+            ':password' => $data['password'],
+        ]);
+    }
+
+    public function checkUsername($username) {
+        // Check if username already exists
+        $check = $this->conn->prepare("SELECT * FROM {$this->table} WHERE username = :username");
+        return $check->execute([':username' => $username]);
+        
+    }
 }
 ?>

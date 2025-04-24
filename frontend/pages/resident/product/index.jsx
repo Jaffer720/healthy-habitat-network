@@ -28,10 +28,11 @@ export default function ProductList() {
         business_id: "",
         name: "",
         description: "",
-        size: "",
+        quantity_size: "",
+        category: "",
         price: "",
         type: "product",
-        category: "affordable"
+        price_range: "affordable"
     });
 
     const [deleteId, setDeleteId] = useState(null);
@@ -59,11 +60,10 @@ export default function ProductList() {
             business_id: "",
             name: "",
             description: "",
-            quantity_size: "",
-            category: "",
+            size: "",
             price: "",
             type: "product",
-            price_range: "affordable"
+            category: "affordable"
         });
         setIsEdit(false);
         setModalOpen(true);

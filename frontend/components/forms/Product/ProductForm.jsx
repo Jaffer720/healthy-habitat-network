@@ -5,14 +5,15 @@ import useBusinesses from "../../../hooks/useBusinesses";
 const ProductSchema = Yup.object({
   name: Yup.string().required("Product name is required"),
   description: Yup.string().required("Description is required"),
-  size: Yup.string().required("Size is required"),
+  quantity_size: Yup.string().required("Size is required"),
+  category: Yup.string().required("Category is required"),
   price: Yup.number().typeError("Price must be a number").required("Price is required"),
   type: Yup.string()
     .oneOf(["product", "service"], "Invalid type")
     .required("Type is required"),
-  category: Yup.string()
-    .oneOf(["affordable", "moderate", "premium"], "Invalid category")
-    .required("Category is required"),
+  price_range: Yup.string()
+    .oneOf(["affordable", "moderate", "premium"], "Invalid price range")
+    .required("Price range is required"),
   business_id: Yup.string().required("Business Name is required"),
 });
 
@@ -58,13 +59,23 @@ export default function ProductForm({ initialValues, onSubmit, isEdit = false })
           </div>
 
           <div>
-            <label className="block font-medium">Size</label>
+            <label className="block font-medium">Quantity/Size</label>
             <Field
-              name="size"
+              name="quantity_size"
               className="w-full border px-3 py-2 rounded"
               placeholder="e.g. 500ml"
             />
-            <ErrorMessage name="size" component="div" className="text-red-500 text-sm" />
+            <ErrorMessage name="quantity_size" component="div" className="text-red-500 text-sm" />
+          </div>
+
+          <div>
+            <label className="block font-medium">Category</label>
+            <Field
+              name="category"
+              className="w-full border px-3 py-2 rounded"
+              placeholder="e.g. reuseable medical equipments, fitness and wellness, etc."
+            />
+            <ErrorMessage name="category" component="div" className="text-red-500 text-sm" />
           </div>
 
           <div>
@@ -96,22 +107,22 @@ export default function ProductForm({ initialValues, onSubmit, isEdit = false })
           </div>
 
           <div>
-            <label className="block font-medium">Category</label>
+            <label className="block font-medium">Price Range</label>
             <div className="flex gap-4 mt-2">
               <label className="flex items-center">
-                <Field type="radio" name="category" value="affordable" checked={values.category === "affordable"} />
+                <Field type="radio" name="price_range" value="affordable" checked={values.price_range === "affordable"} />
                 <span className="ml-2">Affordable</span>
               </label>
               <label className="flex items-center">
-                <Field type="radio" name="category" value="moderate" checked={values.category === "moderate"} />
+                <Field type="radio" name="price_range" value="moderate" checked={values.price_range === "moderate"} />
                 <span className="ml-2">Moderate</span>
               </label>
               <label className="flex items-center">
-                <Field type="radio" name="category" value="premium" checked={values.category === "premium"} />
+                <Field type="radio" name="price_range" value="premium" checked={values.price_range === "premium"} />
                 <span className="ml-2">Premium</span>
               </label>
             </div>
-            <ErrorMessage name="category" component="div" className="text-red-500 text-sm" />
+            <ErrorMessage name="price_range" component="div" className="text-red-500 text-sm" />
           </div>
 
           <div>

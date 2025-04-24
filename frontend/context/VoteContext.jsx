@@ -7,27 +7,32 @@ export const VoteProvider = ({ children }) => {
 
     const fetchVotes = async () => {
         const res = await fetch("http://localhost:8000/index.php/api/votes");
-        // console.log(await res.json())
-        if(await res.json() !== undefined) {
-            const data = await res.json();
-            setVotes(data);
-        }
+        const data = await res.json();
+        console.log("votes", data);
+        setVotes(data.data);
     };
 
     const castVote = async (payload) => {
+        // console.log('pay', payload)
         const res = await fetch("http://localhost:8000/index.php/api/votes", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload),
         });
-        if ((await res.json()).success) fetchVotes();
+        const result = await res.json();
+        if (result.success) fetchVotes();
+        // else alert(result.error || "Vote failed.");
+        return result;
     };
 
     const deleteVote = async (id) => {
         const res = await fetch(`http://localhost:8000/index.php/api/votes?id=${id}`, {
             method: "DELETE",
         });
-        if ((await res.json()).success) fetchVotes();
+        const result = await res.json();
+        if (result.success) fetchVotes();
+        // else alert(result.error || "Failed to delete vote.");
+        return result;
     };
 
     useEffect(() => {

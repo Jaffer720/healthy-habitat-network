@@ -3,6 +3,7 @@ import LoginFrom from "./LoginForm";
 import Button from "../../ui/Button";
 import Card from "../../ui/Card";
 import useAuth from "../../../hooks/useAuth";
+import Router from "next/router";
 
 const LoginTabs = () => {
   const [activeTab, setActiveTab] = useState("resident");
@@ -16,9 +17,11 @@ const LoginTabs = () => {
     });
 
     const data = await res.json();
-
+    console.log('data', data)
     if (data && !data.error) {
-      login({ ...data.user, role: activeTab === "resident" ? "resident" : "business" });
+      alert("Login successful");
+      login(data.user);
+      Router.push("/resident")
     } else {
       alert(data.error || "Login failed");
     }

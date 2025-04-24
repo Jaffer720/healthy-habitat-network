@@ -8,7 +8,7 @@ export const ResidentProvider = ({ children }) => {
     const fetchResidents = async () => {
         const res = await fetch("http://localhost:8000/index.php/api/residents");
         const data = await res.json();
-        setResidents(data);
+        setResidents(data.data);
     };
 
     const createResident = async (payload) => {
