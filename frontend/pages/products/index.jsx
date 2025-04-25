@@ -49,10 +49,11 @@ const ProductsPage = () => {
         });
 
     return (
-        <div className="flex">
+        <div className="lg:flex">
             {/* Filter Panel */}
-            <div className="w-1/5 p-4 border-r border-gray-300">
+            <div className="lg:w-1/5 p-4 border-r border-gray-300">
                 <h3 className="text-lg font-semibold mb-4">Filters</h3>
+                <div className=' max-lg:grid grid-cols-1 md:grid-cols-2  gap-2'>
                 <div className="mb-4">
                     <label className="block text-sm font-medium mb-1">Type:</label>
                     <select
@@ -91,7 +92,7 @@ const ProductsPage = () => {
                                     filters.priceRange[1],
                                 ])
                             }
-                        />
+                        /><span>_</span>
                         <input
                             type="number"
                             className="w-1/2 border border-gray-300 rounded p-2"
@@ -118,10 +119,12 @@ const ProductsPage = () => {
                         <option value="premium">Premium</option>
                     </select>
                 </div>
+
+                </div>
             </div>
 
             {/* Products Section */}
-            <div className="w-4/5 p-4">
+            <div className="lg:w-4/5 p-4">
                 <h1 className="text-2xl font-bold mb-4">Products</h1>
                 <input
                     type="text"

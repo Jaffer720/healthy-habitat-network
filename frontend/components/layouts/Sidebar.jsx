@@ -19,16 +19,17 @@ const Sidebar = ({ routes }) => {
       {/* Toggle Button for Mobile */}
       <button
         onClick={() => setOpen(!open)}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-blue-600 text-white"
+        className="md:hidden absolute top-5  right-2 z-10 p-2 rounded bg-blue-600 text-white"
       >
         <FaBars />
       </button>
 
       {/* Sidebar */}
       <aside
-        className={`relative top-0  left-0 min-h-screen h-full w-64 bg-white shadow-lg transition-transform
+        className={`relative top-0  left-0 w-64 bg-white shadow-lg transition-transform
           ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
       >
+          
         {/* <div className="p-4 border-b font-bold text-xl text-blue-600">
           Healthy Habitat
         </div> */}

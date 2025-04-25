@@ -14,13 +14,10 @@ const Navbar = () => {
   return (
     <nav className="w-full bg-white shadow-md px-4 py-3 flex items-center justify-between flex-wrap">
       {/* Left */}
-      <div className="text-xl font-bold text-blue-600">Healthy Habitat</div>
+      <Link href="/" className="text-xl font-bold text-white bg-blue-600 leading-5 tracking-wide p-1 px-4 rounded-br-3xl rounded-tl-3xl"><div>Healthy</div><div>Habitat</div></Link>
 
       {/* Center */}
       <div className="flex space-x-4 text-gray-700 text-sm md:text-base">
-        <Link href="/" className="hover:text-blue-600">Home</Link>
-        <Link href="/products" className="hover:text-blue-600">Explore Products</Link>
-        <Link href="/learnmore" className="hover:text-blue-600">Learn More</Link>
       </div>
 
       {/* Right */}

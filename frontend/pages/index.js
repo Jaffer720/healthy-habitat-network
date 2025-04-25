@@ -1,9 +1,42 @@
+import CarouselComponent from "@/components/ui/CarouselComponent";
 import Link from "next/link"
 export default function Home() {
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold">Welcome to Healthy Habitat Network</h1>
+      {/* <h1 className="text-xl font-bold">Welcome to Healthy Habitat Network</h1>
       <Link href="/auth/login">Login</Link> | <Link href="/auth/register">Register</Link>
+       */}
+       <div className="flex flex-col gap-4">
+        {/* Cover Art */}
+        <CarouselComponent/>
+        <div className=" text-center flex flex-col items-center">
+          <h2 className="  text-xl font-bold tracking-wide">
+            About Us
+          </h2>
+          <hr className="w-[90%] sm:w-[70%] text-gray-200 my-2"/>
+          <p className="w-[90%] sm:w-[70%] max-sm:text-sm ">
+            "Healthy Habitat Network," is a non-profit organization dedicated to promoting health and wellness in communities through sustainable living practices. The initiative aims to develop an online platform encouraging individuals and families to adopt healthy, sustainable lifestyle choices by connecting them with businesses offering health and wellness products and services. The platform will serve as a bridge between health-conscious consumers and businesses, fostering a community focused on well-being and sustainability.
+          </p>
+        </div>
+        {/* Products */}
+        <div className=" border p-2 border-gray-200 rounded-2xl">
+        <h2 className="ml-4 text-xl font-bold tracking-wide">
+            Top Products
+          </h2>
+          <hr className="sm:w-[70%] text-gray-200 my-2"/>
+          <div className=" gap-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <button className=" h-full w-full bg-red-900 rounded-2xl text-amber-50">ejkr</button>
+            <button className=" h-full w-full bg-red-900 rounded-2xl text-amber-50">ejkr</button>
+            <button className=" h-full w-full bg-red-900 rounded-2xl text-amber-50">ejkr</button>
+            <button className=" h-full w-full bg-red-900 rounded-2xl text-amber-50">ejkr</button>
+            <button className=" h-full w-full bg-red-900 rounded-2xl text-amber-50">ejkr</button>
+            <button className=" h-full w-full bg-red-900 rounded-2xl text-amber-50">ejkr</button>
+            <button className=" h-full w-full bg-red-900 rounded-2xl text-amber-50">ejkr</button>
+            <button className=" h-full w-full bg-red-900 rounded-2xl text-amber-50">ejkr</button>
+            <button className=" h-full w-full bg-red-900 rounded-2xl text-amber-50">ejkr</button>
+          </div>
+        </div>
+       </div>
     </div>
   );
 }
