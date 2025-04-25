@@ -85,7 +85,7 @@ class BusinessController {
 
         if ($user && password_verify($password, $user['password'])) {
             $payload = [
-                "id" => $user['business_id'],
+                "id" => $user['id'],
                 "username" => $user['username'],
                 "role" => "business",
                 "exp" => time() + $GLOBALS['jwt_expiration'],

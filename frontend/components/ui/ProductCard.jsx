@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
     const { user } = useAuth();
     const { votes, castVote, deleteVote } = useVotes();
 
-    const [voted, setVoted] = useState(votes.find(vote => vote.resident_id === user.id && vote.product_id === product.id)?.vote_value || null); // 'yes' | 'no' | null
+    const [voted, setVoted] = useState(votes.find(vote => vote.resident_id === user.id && vote.product_id === product?.id)?.vote_value || null); // 'yes' | 'no' | null
 
     const handleVote = async (value) => {
         // check if user is logged in and has the role of resident

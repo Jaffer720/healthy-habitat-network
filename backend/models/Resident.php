@@ -53,7 +53,7 @@ class Resident {
     }
 
     public function login($username) {
-        $stmt = $this->conn->prepare("SELECT * FROM residents WHERE username = :username");
+        $stmt = $this->conn->prepare("SELECT * FROM $this->table WHERE username = :username");
         $stmt->execute([':username' => $username]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
