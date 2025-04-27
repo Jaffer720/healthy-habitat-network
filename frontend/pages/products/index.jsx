@@ -2,12 +2,22 @@ import React, { useState } from 'react';
 import useProducts from '../../hooks/useProducts'; // Assuming you have a custom hook for fetching products
 import ProductCard from '../../components/ui/ProductCard'; // Assuming you have a ProductCard component
 import useBusinesses from '../../hooks/useBusinesses';
+import useVotes from '../../hooks/useVotes';
 
 const ProductsPage = () => {
     const { products } = useProducts(); // Fetch products using the custom hook
     const { businesses } = useBusinesses(); // Fetch businesses using the custom hook
+    const { votes } = useVotes();
+    const interested_Votes = votes.filter(v => v.vote_value === "Yes")
+    const sorted_products = products.sort((a, b) => {
+        // Count votes for each product
+        const aVotes = interested_Votes?.filter(vote => vote.product_id === a.id).length;
+        const bVotes = interested_Votes?.filter(vote => vote.product_id === b.id).length;
 
-    const refined_products = products.map((product) => {
+        return bVotes - aVotes; // Highest votes first
+    });
+    console.log('sorted', sorted_products)
+    const refined_products = sorted_products.map((product) => {
         const business_name = businesses.find((business) => business.id === product.business_id)?.name;
         return { ...product, business_name };
     });
@@ -54,71 +64,71 @@ const ProductsPage = () => {
             <div className="lg:w-1/5 p-4 border-r border-gray-300">
                 <h3 className="text-lg font-semibold mb-4">Filters</h3>
                 <div className=' max-lg:grid grid-cols-1 md:grid-cols-2  gap-2'>
-                <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">Type:</label>
-                    <select
-                        className="w-full border border-gray-300 rounded p-2"
-                        value={filters.type}
-                        onChange={(e) => handleFilterChange('type', e.target.value)}
-                    >
-                        <option value="">All</option>
-                        <option value="product">Product</option>
-                        <option value="service">Service</option>
-                    </select>
-                </div>
-                <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">Category:</label>
-                    <select
-                        className="w-full border border-gray-300 rounded p-2"
-                        value={filters.category}
-                        onChange={(e) => handleFilterChange('category', e.target.value)}
-                    >
-                        <option value="">All</option>
-                        <option value="Reusable Health Products">Reusable Health Products</option>
-                        <option value="Healty Eating">Medical Supplies</option>
-                        <option value="Fitness & Wellness">Fitness and Wellness</option>
-                    </select>
-                </div>
-                <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">Price Range:</label>
-                    <div className="flex gap-2">
-                        <input
-                            type="number"
-                            className="w-1/2 border border-gray-300 rounded p-2"
-                            value={filters.priceRange[0]}
-                            onChange={(e) =>
-                                handleFilterChange('priceRange', [
-                                    Number(e.target.value),
-                                    filters.priceRange[1],
-                                ])
-                            }
-                        /><span>_</span>
-                        <input
-                            type="number"
-                            className="w-1/2 border border-gray-300 rounded p-2"
-                            value={filters.priceRange[1]}
-                            onChange={(e) =>
-                                handleFilterChange('priceRange', [
-                                    filters.priceRange[0],
-                                    Number(e.target.value),
-                                ])
-                            }
-                        />
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium mb-1">Type:</label>
+                        <select
+                            className="w-full border border-gray-300 rounded p-2"
+                            value={filters.type}
+                            onChange={(e) => handleFilterChange('type', e.target.value)}
+                        >
+                            <option value="">All</option>
+                            <option value="product">Product</option>
+                            <option value="service">Service</option>
+                        </select>
                     </div>
-                </div>
-                <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">Price Range (Category):</label>
-                    <select
-                        className="w-full border border-gray-300 rounded p-2"
-                        value={filters.price_range}
-                        onChange={(e) => handleFilterChange('price_range', e.target.value)}
-                    >
-                        <option value="">All</option>
-                        <option value="affordable">Affordable</option>
-                        <option value="moderate">Moderate</option>
-                        <option value="premium">Premium</option>
-                    </select>
-                </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium mb-1">Category:</label>
+                        <select
+                            className="w-full border border-gray-300 rounded p-2"
+                            value={filters.category}
+                            onChange={(e) => handleFilterChange('category', e.target.value)}
+                        >
+                            <option value="">All</option>
+                            <option value="Reusable Health Products">Reusable Health Products</option>
+                            <option value="Healty Eating">Medical Supplies</option>
+                            <option value="Fitness & Wellness">Fitness and Wellness</option>
+                        </select>
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium mb-1">Price Range:</label>
+                        <div className="flex gap-2">
+                            <input
+                                type="number"
+                                className="w-1/2 border border-gray-300 rounded p-2"
+                                value={filters.priceRange[0]}
+                                onChange={(e) =>
+                                    handleFilterChange('priceRange', [
+                                        Number(e.target.value),
+                                        filters.priceRange[1],
+                                    ])
+                                }
+                            /><span>_</span>
+                            <input
+                                type="number"
+                                className="w-1/2 border border-gray-300 rounded p-2"
+                                value={filters.priceRange[1]}
+                                onChange={(e) =>
+                                    handleFilterChange('priceRange', [
+                                        filters.priceRange[0],
+                                        Number(e.target.value),
+                                    ])
+                                }
+                            />
+                        </div>
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium mb-1">Price Range (Category):</label>
+                        <select
+                            className="w-full border border-gray-300 rounded p-2"
+                            value={filters.price_range}
+                            onChange={(e) => handleFilterChange('price_range', e.target.value)}
+                        >
+                            <option value="">All</option>
+                            <option value="affordable">Affordable</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="premium">Premium</option>
+                        </select>
+                    </div>
 
                 </div>
             </div>
