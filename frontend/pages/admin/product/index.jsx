@@ -120,9 +120,10 @@ export default function ProductList() {
             <Table
                 columns={columns}
                 data={sortedProducts || []}
-                onAdd={handleAdd}
-                onEdit={row => handleEdit(row.product_id)}
-                onDelete={row => handleDelete(row.product_id)}
+                // onAdd={handleAdd}
+                onView={(id) => Router.push(`/products/${id}`)}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
             />
             <Modal
                 isOpen={modalOpen}

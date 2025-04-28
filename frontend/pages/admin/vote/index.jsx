@@ -1,19 +1,17 @@
 import { useState } from "react";
 import ConfirmModal from "../../../components/ui/ConfirmModal";
-import Modal from "../../../components/ui/Modal";
 import Table from "../../../components/ui/Table";
 import useVotes from "../../../hooks/useVotes";
 import useResident from "../../../hooks/useResidents";
-import useLocation from "../../../hooks/useLocations";
-import useUser from "../../../hooks/useUser";
+import useAuth from "../../../hooks/useAuth";
+import useProducts from "../../../hooks/useProducts";
 // import VoteForm from "../../../components/forms/Vote/VoteForm";
 
 export default function VoteList() {
-    const { user } = useUser() // Assuming you have a user context or hook to get the current user
-    const { votes, createVote, deleteVote } = useVotes();
-    const user_votes = votes.filter((vote) => vote.user_id === user.id); // Replace with actual user ID
+    const { user } = useAuth() // Assuming you have a user context or hook to get the current user
+    const { votes, deleteVote } = useVotes();
     const { residents } = useResident();
-    const { products } = useLocation();
+    const { products } = useProducts();
 
     // const [modalOpen, setModalOpen] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
@@ -24,10 +22,6 @@ export default function VoteList() {
         { Header: "Product", accessor: "productName" },
         { Header: "Vote Value", accessor: "vote_value" },
     ];
-
-    const handleAdd = () => {
-        setModalOpen(true);
-    };
 
     const handleDelete = (id) => {
         setDeleteId(id);
@@ -56,7 +50,7 @@ export default function VoteList() {
         // refetch data if needed
     };
 
-    const votesWithNames = user_votes.map((vote) => ({
+    const votesWithNames = votes.map((vote) => ({
         ...vote,
         residentName: residents.find((r) => r.id === vote.resident_id)?.name || "Unknown",
         productName: products.find((p) => p.id === vote.product_id)?.name || "Unknown",

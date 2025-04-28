@@ -18,11 +18,13 @@ const LoginTabs = () => {
 
     const data = await res.json();
     console.log('data', data)
-    if (data && !data.error) {
+    if (data && data.success) {
       alert("Login successful");
       login(data.user);
-      Router.push("/resident")
-    } else {
+      Router.push(`/${data.user.role}`);
+    } else if (data && data.message) {
+      alert(data.message || "Login failed");
+    } else if (data && data.error) {
       alert(data.error || "Login failed");
     }
 

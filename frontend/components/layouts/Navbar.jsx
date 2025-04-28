@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import useAuth from "../../hooks/useAuth";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import Router from "next/router";
 
 const Navbar = () => {
   // const [user, setUser] = useState(null);
@@ -10,6 +11,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logout();
+    setDropdownOpen(false);
+    Router.push("/"); // Redirect to login page after logout
   };
 
   const toggleDropdown = () => {
@@ -29,7 +32,7 @@ const Navbar = () => {
       <div className="relative flex items-center space-x-3 text-sm md:text-base">
         {user ? (
           <div className="relative">
-            <button 
+            <button
               className="flex items-center gap-2 bg-gray-100 px-1 py-1 rounded-3xl shadow cursor-pointer"
               onClick={toggleDropdown}
             >
@@ -44,9 +47,17 @@ const Navbar = () => {
             {dropdownOpen && (
               <div className="absolute right-0 w-max bg-gray-100 rounded shadow-lg px-1 py-2 z-20">
                 <div className="px-4 py-2 font-semibold text-gray-700">{user.name}</div>
-                <hr className="text-gray-300 mx-2"></hr>
+                <hr className="text-gray-300 mx-2 mb-1"></hr>
+                <Link
+                  href={`/${user.role}/`}
+                  onClick={toggleDropdown}
+                  className="block px-4 py-2 hover:bg-gray-200 hover:rounded-2xl text-gray-700"
+                >
+                  {user.role === "admin" ? "Admin Pannel" : user.role === "business" ? "My Products" : "My votes"}
+                </Link>
                 <Link
                   href={`/${user.role}/profile`}
+                  onClick={toggleDropdown}
                   className="block px-4 py-2 hover:bg-gray-200 hover:rounded-2xl text-gray-700"
                 >
                   Profile

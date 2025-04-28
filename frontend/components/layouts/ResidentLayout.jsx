@@ -1,4 +1,4 @@
-import Sidebar from "./Sidebar"; // your admin sidebar
+// import Sidebar from "./Sidebar"; // your admin sidebar
 import useProtectedRoute from "../../hooks/useProtectedRoute";
 
 import { residentRoutes } from "../../utils/routes"; // your admin routes
@@ -9,7 +9,7 @@ export default function ResidentLayout({ children }) {
 
   return (
     <div className="py-0.5 flex items-start justify-start gap-2">
-      <Sidebar routes={residentRoutes} />
+      {/* <Sidebar routes={residentRoutes} /> */}
       <main className=" p-4 w-full">{children}</main>
     </div>
   );

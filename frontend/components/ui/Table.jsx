@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { FaEye, FaPen, FaTrashAlt } from "react-icons/fa"; // Updated Icons
 import { useRouter } from "next/router";
 import Button from "./Button";
 
@@ -13,9 +13,10 @@ const sortData = (data, key, asc) =>
 export default function Table({
     columns,
     data,
-    onAdd = () => { },
-    onEdit = () => { },
-    onDelete = () => { },
+    onAdd = null,
+    onView = null,
+    onEdit = null,
+    onDelete = null,
 }) {
     const router = useRouter();
     const [search, setSearch] = useState("");
@@ -33,7 +34,7 @@ export default function Table({
             )
         );
         setFiltered(result);
-        setPage(1); // reset to page 1 on search
+        setPage(1);
     }, [search, data]);
 
     const sorted = useMemo(() => {
@@ -51,23 +52,25 @@ export default function Table({
     return (
         <div className="p-4 bg-white shadow-md rounded">
             {/* Header */}
-                        <div className="flex justify-between mb-4 flex-wrap gap-2">
-                            <input
-                                type="text"
-                                placeholder="Search..."
-                                className="border px-3 py-2 rounded-md"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                            />
-                            <Button
-                                onClick={() => onAdd()}
-                                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                            >
-                                Add New
-                            </Button>
-                        </div>
+            <div className="flex justify-between mb-4 flex-wrap gap-2">
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    className="border px-3 py-2 rounded-md"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+                {onAdd && (
+                    <Button
+                        onClick={onAdd}
+                        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    >
+                        Add New
+                    </Button>
+                )}
+            </div>
 
-                        {/* Table */}
+            {/* Table */}
             <div className="overflow-x-auto">
                 <table className="w-full table-auto border-collapse">
                     <thead>
@@ -86,7 +89,7 @@ export default function Table({
                                     {sortKey === col.accessor && (asc ? " ▲" : " ▼")}
                                 </th>
                             ))}
-                            <th className="p-3">Actions</th>
+                            {(onEdit || onDelete) && <th className="p-3">Actions</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -97,17 +100,25 @@ export default function Table({
                                         {row[col.accessor]}
                                     </td>
                                 ))}
-                                <td className="p-3 space-x-3 text-blue-600 flex items-center justify-start">
-                                    <button onClick={() => router.push(`/view/${row.id}`)}>
-                                        <FaEye />
-                                    </button>
-                                    <button onClick={() => onEdit(row.id)}>
-                                        <FaEdit className="text-purple-700" />
-                                    </button>
-                                    <button onClick={() => onDelete(row.id)}>
-                                        <FaTrash className="text-red-500" />
-                                    </button>
-                                </td>
+                                {(onView || onEdit || onDelete) && (
+                                    <td className="p-3 space-x-3 text-blue-600 flex items-center justify-start">
+                                        {onView && (
+                                            <button onClick={() => onView(row.id)}>
+                                                <FaEye className="hover:text-blue-700" />
+                                            </button>
+                                        )}
+                                        {onEdit && (
+                                            <button onClick={() => onEdit(row.id)}>
+                                                <FaPen className="text-purple-700 hover:text-purple-900" />
+                                            </button>
+                                        )}
+                                        {onDelete && (
+                                            <button onClick={() => onDelete(row.id)}>
+                                                <FaTrashAlt className="text-red-500 hover:text-red-700" />
+                                            </button>
+                                        )}
+                                    </td>
+                                )}
                             </tr>
                         ))}
                     </tbody>
