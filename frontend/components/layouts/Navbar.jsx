@@ -56,7 +56,7 @@ const Navbar = () => {
                   {user.role === "admin" ? "Admin Pannel" : user.role === "business" ? "My Products" : "My votes"}
                 </Link>
                 <Link
-                  href={`/${user.role}/profile`}
+                  href={`/${user.role}/${ user.role !== "admin" ? "profile" : ""}`}
                   onClick={toggleDropdown}
                   className="block px-4 py-2 hover:bg-gray-200 hover:rounded-2xl text-gray-700"
                 >
